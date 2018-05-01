@@ -16,7 +16,7 @@ const successLogger = createLogger
 successLogger.add(winstonRotator, {
   'name': 'access-file',
   'level': 'info',
-  'dirname': './logs/',
+  'dirname': process.env.log_path,
   'filename': '%DATE%access.log',
   'json': false,
   'datePattern': 'YYYY-MM-DD-'

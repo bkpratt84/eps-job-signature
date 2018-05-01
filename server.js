@@ -7,6 +7,8 @@ var sigs = require('./signature/functions.js')
 const successLog = require('./util/logger').successlog
 const errorLog = require('./util/logger').errorlog
 
+successLog.info(`App started`)
+
 var job = new CronJob({
   cronTime: '00 00 * * * *',
   onTick: function() {
