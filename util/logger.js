@@ -26,7 +26,7 @@ const errorLogger = createLogger
 errorLogger.add(winstonRotator, {
   'name': 'error-file',
   'level': 'error',
-  'dirname': './logs/',
+  'dirname': process.env.log_path,
   'filename': '%DATE%error.log',
   'json': false,
   'datePattern': 'YYYY-MM-DD-'
