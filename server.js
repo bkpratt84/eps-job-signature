@@ -1,29 +1,30 @@
 require('dotenv').config()
 var Promise = require('promise')
-var sigs = require('./signature/functions.js')
 var moment = require('moment')
+var CronJob = require('cron').CronJob
 
-sigs.getSignatures().then(result => {
-  if (result) {
-    sigs.saveSignaturesToDisk(result).then(apps => {
-      sigs.updateDatabase(apps).then(success => {
-        console.log(success + ' @ ' + moment().format('MM/DD/YYYY hh:mm:ss A'))
-      }).catch(error => {
-        console.log(error)
-      })
-    }).catch(error => {
-      console.log(error)
-    })
-  }
-})
+var sigs = require('./signature/functions.js')
+const successLog = require('./util/logger').successlog
+const errorLog = require('./util/logger').errorlog
 
-
-
-var CronJob = require('cron').CronJob;
 var job = new CronJob({
   cronTime: '00 00 * * * *',
   onTick: function() {
-    console.log(moment().format('MM/DD/YYYY hh:mm:ss A'))
+    sigs.getSignatures().then(result => {
+      if (result) {
+        sigs.saveSignaturesToDisk(result).then(apps => {
+          sigs.updateDatabase(apps).then(success => {
+            var logTime = moment().format('MM/DD/YYYY hh:mm:ss A')
+    
+            successLog.info(`Process completed: ${logTime}`);
+          }).catch(error => {
+            errorLog.error(`Error Message: ${error}`)
+          })
+        }).catch(error => {
+          errorLog.error(`Error Message: ${error}`)
+        })
+      }
+    })
   },
   start: true,
   timeZone: 'America/Chicago'
