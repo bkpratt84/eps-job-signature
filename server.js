@@ -1,4 +1,6 @@
 require('dotenv').config()
+//In prod I have to use below to load the environment variables
+//require('dotenv').config({ path: `C:/signature/.env` })
 var Promise = require('promise')
 var moment = require('moment')
 var CronJob = require('cron').CronJob
