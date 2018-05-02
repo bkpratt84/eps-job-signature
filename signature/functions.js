@@ -6,7 +6,7 @@ const svg2img = require('svg2img-canvas-prebuilt')
 
 const db = require('../db/db')
 const jSig = require('./jsignaturehelper')
-const errorLog = require('./util/logger').errorlog
+const errorLog = require('../util/logger').errorlog
 
 var toUpdate = []
 
