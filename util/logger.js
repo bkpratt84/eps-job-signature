@@ -13,6 +13,7 @@ const createLogger = new winston.Logger({
 
 
 const successLogger = createLogger
+
 successLogger.add(winstonRotator, {
   'name': 'access-file',
   'level': 'info',
@@ -23,6 +24,7 @@ successLogger.add(winstonRotator, {
 })
 
 const errorLogger = createLogger
+
 errorLogger.add(winstonRotator, {
   'name': 'error-file',
   'level': 'error',
