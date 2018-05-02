@@ -10,22 +10,6 @@ const logger = require('./util/logger').log
 
 logger.info(`App started`)
 
-sigs.getSignatures().then(result => {
-  if (result) {
-    sigs.saveSignaturesToDisk(result).then(apps => {
-      sigs.updateDatabase(apps).then(success => {
-        var logTime = moment().format('MM/DD/YYYY hh:mm:ss A')
-
-        logger.info(`Process completed: ${logTime}`);
-      }).catch(error => {
-        logger.error(`Error Message: ${error}`)
-      })
-    }).catch(error => {
-      logger.error(`Error Message: ${error}`)
-    })
-  }
-})
-
 var job = new CronJob({
   cronTime: '00 00 * * * *',
   onTick: function() {
