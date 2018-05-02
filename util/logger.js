@@ -12,29 +12,17 @@ const createLogger = new winston.Logger({
 });
 
 
-const successLogger = createLogger
+const logger = createLogger
 
-successLogger.add(winstonRotator, {
+logger.add(winstonRotator, {
   'name': 'access-file',
-  'level': 'info',
+  'level': 'silly',
   'dirname': process.env.log_path,
-  'filename': '%DATE%access.log',
-  'json': false,
-  'datePattern': 'YYYY-MM-DD-'
-})
-
-const errorLogger = createLogger
-
-errorLogger.add(winstonRotator, {
-  'name': 'error-file',
-  'level': 'error',
-  'dirname': process.env.log_path,
-  'filename': '%DATE%error.log',
+  'filename': '%DATE%log.log',
   'json': false,
   'datePattern': 'YYYY-MM-DD-'
 })
 
 module.exports = {
-  'successlog': successLogger,
-  'errorlog': errorLogger
+  'log': logger,
 }

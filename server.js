@@ -6,10 +6,9 @@ var moment = require('moment')
 var CronJob = require('cron').CronJob
 
 var sigs = require('./signature/functions.js')
-const successLog = require('./util/logger').successlog
-const errorLog = require('./util/logger').errorlog
+const logger = require('./util/logger').log
 
-successLog.info(`App started`)
+logger.info(`App started`)
 
 sigs.getSignatures().then(result => {
   if (result) {
@@ -17,12 +16,12 @@ sigs.getSignatures().then(result => {
       sigs.updateDatabase(apps).then(success => {
         var logTime = moment().format('MM/DD/YYYY hh:mm:ss A')
 
-        successLog.info(`Process completed: ${logTime}`);
+        logger.info(`Process completed: ${logTime}`);
       }).catch(error => {
-        errorLog.error(`Error Message: ${error}`)
+        logger.error(`Error Message: ${error}`)
       })
     }).catch(error => {
-      errorLog.error(`Error Message: ${error}`)
+      logger.error(`Error Message: ${error}`)
     })
   }
 })
@@ -36,12 +35,12 @@ var job = new CronJob({
           sigs.updateDatabase(apps).then(success => {
             var logTime = moment().format('MM/DD/YYYY hh:mm:ss A')
     
-            successLog.info(`Process completed: ${logTime}`);
+            logger.info(`Process completed: ${logTime}`);
           }).catch(error => {
-            errorLog.error(`Error Message: ${error}`)
+            logger.error(error)
           })
         }).catch(error => {
-          errorLog.error(`Error Message: ${error}`)
+          logger.error(error)
         })
       }
     })

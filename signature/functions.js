@@ -6,7 +6,7 @@ const svg2img = require('svg2img-canvas-prebuilt')
 
 const db = require('../db/db')
 const jSig = require('./jsignaturehelper')
-const errorLog = require('../util/logger').errorlog
+const logger = require('../util/logger').log
 
 var toUpdate = []
 
@@ -102,13 +102,13 @@ fs.writeFilePromise = function(filename, data, appID) {
     return new Promise(function(resolve, reject) {
         svg2img(data, function(error, buffer) {
             if (error) {
-                errorLog.error(`Error converting file: ${path.basename(filename)}`)
+                logger.error(`Error converting file: ${path.basename(filename)}`)
                 return reject(error)
             }
 
             fs.writeFile(filename, buffer, function(error, data) {
                 if (error) {
-                    errorLog.error(`Error saving file: ${path.basename(filename)}`)
+                    logger.error(`Error saving file: ${path.basename(filename)}`)
                     return reject(error)
                 }
                 
